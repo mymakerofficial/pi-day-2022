@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1080 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <path d="M1000,80L1000,1000L80,1000L81.487,999.999C588.586,999.175 1000,587.254 1000,80L80,80L1000,80Z" style="fill:rgb(0,93,235);fill-opacity:0.24;"/>
+    <path d="M80,80L1000,80L1000,1000L80,1000L81.487,999.999C588.586,999.175 1000,587.254 1000,80L80,80ZM990.703,265.7L990.703,990.703L265.67,990.703C629.7,916.783 916.752,629.747 990.703,265.7Z" style="fill:rgb(0,93,235);"/>
+    <path d="M1000,80C1000,587.254 588.586,999.175 81.487,999.999L80,1000L80,80L1000,80Z" style="fill:rgb(235,49,23);fill-opacity:0.24;"/>
+    <path d="M1000,80C1000,587.254 588.586,999.175 81.487,999.999L80,1000L80,80L1000,80ZM89.297,990.652L89.297,89.297C89.297,89.297 990.656,89.297 990.656,89.297L990.656,89.297C985.692,584.562 584.551,985.699 89.297,990.652Z" style="fill:rgb(235,49,23);"/>
+</svg>
