@@ -15,7 +15,7 @@
         <p>
           <span class="math">π ≈ 4 * ( pointsInsideQuadrant / pointsTotal )</span><br>
           <span class="math">π ≈ 4 * ( {{ piApprox.pointsInsideQuadrant }} / {{ piApprox.pointsTotal }} )</span><br>
-          <span class="math result">π ≈ <b>{{ piApprox.currentPi }}</b></span>
+          <span class="math result"><b>π ≈ {{ piApprox.currentPi }}</b></span>
         </p>
         <p>
           <span class="math secondary"><small>π = {{ Math.PI }}</small></span><br>
@@ -25,7 +25,7 @@
       <h1>Method</h1>
       <p>
         Imagine a circle inside a square. The circle has a radius of <span class="math"><b>𝑟</b></span> and the square surrounding it has side length's of <span class="math"><b>2𝑟</b></span>.<br>
-        We know that ratio of the shapes areas is <span class="math"><b>π/4</b></span>, but we don't know what Pi is. To approximate Pi we uniformly scatter points on our square, then from knowing how many of those points have landed inside our circle we can calculate an approximate value of Pi.<br>
+        We know that the ratio of the shape's area's is <span class="math"><b>π/4</b></span>. However we do not know Pi, so to approximate Pi we uniformly scatter points on our square, then from knowing how many of those points have landed inside our circle we can calculate an approximate value of Pi.<br>
         <br>
         In this example we are only using one quarter of our circle and square, this just makes things run a bit smoother and since the ratio between the areas stays the same, the math's don't change.
       </p>
@@ -40,7 +40,7 @@
       <br>
       <p>
         By now by uniformly scattering points inside our square and keeping track of how many of those points are inside the quarter circle we can approximate Pi.<br>
-        Calculating if a point is inside our quadrant is easy. We just need to calculate its distance to the origin like this <span class="math"><b>d = x<sup>2</sup> + y<sup>2</sup></b></span>, if the distance is smaller or equal to <span class="math">𝑟</span> then the point is inside.<br><br>
+        Calculating if a point is inside our quadrant is easy. We just need to calculate its distance to the origin like this <span class="math"><b>d = x<sup>2</sup> + y<sup>2</sup></b></span>, if the distance is smaller or equal to <span class="math"><b>𝑟</b></span> then the point is inside.<br><br>
         Knowing the ratio between our two area's (<span class="math"><b>π/4</b></span>) we can conclude that <span class="math"><b>π ≈ 4 * ( pointsInsideQuadrant / pointsTotal )</b></span>
       </p>
       <button v-on:click="start" v-if="!play">See in action</button>
