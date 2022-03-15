@@ -3,7 +3,7 @@
     <div class="container">
       <h1 class="title">Approximating 𝑃𝑖 <small>using Monte Carlo method</small></h1>
       <div v-if="!play">
-        <button v-on:click="start" class="primary">▶ Play live demo</button><br>
+        <button v-on:click="start" class="primary">▶ See in action</button><br>
       </div>
       <div v-else>
         <canvas ref="canvas"></canvas>
@@ -43,7 +43,18 @@
         Calculating if a point is inside our quadrant is easy. We just need to calculate its distance to the origin like this <span class="math"><b>d = x<sup>2</sup> + y<sup>2</sup></b></span>, if the distance is smaller or equal to <span class="math"><b>𝑟</b></span> then the point is inside.<br><br>
         Knowing the ratio between our two area's (<span class="math"><b>π/4</b></span>) we can conclude that <span class="math"><b>π ≈ 4 * ( pointsInsideQuadrant / pointsTotal )</b></span>
       </p>
-      <button v-on:click="start" v-if="!play">See in action</button>
+      <button v-on:click="start" v-if="!play" class="highlight">See in action</button>
+
+      <h1>The Code</h1>
+      <p>
+        The code for this is extremely simple. In this case I've written a class in JavaScript to manage all the calculations.
+      </p>
+      <pre><code ref="approxCodeField"></code></pre>
+      <p>
+        We can now continuously call our <code><span class="hljs-title function_">dropPoint</span>()</code> method to create new random points.
+      </p>
+      <pre><code ref="execExampleCodeField"></code></pre>
+      <button v-on:click="start" v-if="!play" class="highlight">See in action</button>
       <br>
     </div>
     <div class="footer">
@@ -61,7 +72,8 @@
 <script>
 import MonteCarloPiApprox from "@/scripts/monte-carlo-pi-approx";
 import Draw from "@/scripts/draw";
-
+import hljs from "highlight.js";
+import axios from "axios";
 
 export default {
   name: 'App',
@@ -74,7 +86,8 @@ export default {
       piApprox: new MonteCarloPiApprox(),
       draw: null,
       pointsPerFrame: 3000,
-      play: false
+      play: false,
+      codeHtml: "loading...",
     }
   },
 
@@ -107,17 +120,31 @@ export default {
       if(!this.play) return;
       window.requestAnimationFrame(this.update)
     }
+  },
+
+  mounted() {
+    axios.get(`https://gist.githubusercontent.com/mymakerofficial/0c220620d3f2412099b3c278919b31bb/raw/3749b4df011b3a566082733313da401423176ea6/monte-carlo-pi-approx.js`).then(response => {
+       this.$refs.approxCodeField.innerHTML = hljs.highlight(response.data, {language: 'js'}).value
+    }).catch(error => {
+      console.log(error)
+    })
+
+    axios.get(`https://gist.githubusercontent.com/mymakerofficial/0c220620d3f2412099b3c278919b31bb/raw/61168a26e0f472a79a9fced61bde1161531c1519/execute-example.js`).then(response => {
+      this.$refs.execExampleCodeField.innerHTML = hljs.highlight(response.data, {language: 'js'}).value
+    }).catch(error => {
+      console.log(error)
+    })
   }
 }
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab&family=Roboto+Mono');
 
 body {
   font-family: 'Roboto', sans-serif;
-  color: hsl(0, 1%, 18%);
-  background-color: hsl(0, 1%, 98%);
+  color: hsl(0, 0%, 18%);
+  background-color: hsl(0, 0%, 98%);
   padding: 0;
   margin: 0;
 }
@@ -130,7 +157,7 @@ p {
 h1, h2, h3, h4, h5, h6 {
   margin-top: 3em;
   padding: 12px 3px;
-  border-bottom: solid 2px hsl(0, 1%, 80%);
+  border-bottom: solid 2px hsl(0, 0%, 80%);
 }
 
 .title {
@@ -142,11 +169,11 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 2em;
   font-size: 1.3em;
   padding: 4px 0;
-  border-bottom: solid 2px hsl(0, 1%, 80%);
+  border-bottom: solid 2px hsl(0, 0%, 80%);
 }
 
 .secondary {
-  color: hsl(0, 1%, 60%);
+  color: hsl(0, 0%, 60%);
 }
 
 img {
@@ -163,16 +190,30 @@ canvas {
 }
 
 button {
-  background-color: hsl(0, 1%, 90%);
+  background-color: hsl(0, 0%, 90%);
   border: unset;
   padding: 12px 16px;
-  margin: 12px;
+  margin: 12px 24px;
   font-size: 1.01em;
   border-radius: 3px;
 }
 
 button:hover {
   cursor: pointer
+}
+
+button.highlight {
+  background: hsl(0, 0%, 90%);
+  background: radial-gradient(circle at top, hsl(0, 0%, 90%) 0%, hsl(0, 0%, 90%) 25%, hsl(0, 0%, 96%) 75%, hsl(0, 0%, 96%) 100%);
+  background-size: 400% 200%;
+  background-position: 80% 100%;
+  background-repeat: repeat;
+  transition-duration: .2s;
+}
+
+button.highlight:hover {
+  background-size: 400% 200%;
+  background-position: -100% 100%;
 }
 
 button.primary {
@@ -192,10 +233,23 @@ button.primary:hover {
   background-position: -100% 100%;
 }
 
+code {
+  font-family: 'Roboto Mono', monospace;
+  padding: 6px;
+  background-color: hsl(0, 0%, 96%);
+  border-radius: 3px;
+}
+
+pre code {
+  padding: 12px;
+  display: block;
+  margin: 12px 24px;
+}
+
 .footer {
   margin-top: 42px;
   padding: 12px;
-  background-color: hsl(0, 1%, 96%);
+  background-color: hsl(0, 0%, 96%);
 }
 
 .container {
@@ -224,4 +278,117 @@ button.primary:hover {
   }
 }
 
+.hljs {
+  color: #000;
+  background: #fff;
+}
+
+.hljs-subst,
+.hljs-title {
+  font-weight: normal;
+  color: #000;
+}
+
+.hljs-title.function_ {
+  color: #7A7A43;
+}
+
+.hljs-code,
+.hljs-comment,
+.hljs-quote {
+  color: #8C8C8C;
+  font-style: italic;
+}
+
+.hljs-meta {
+  color: #9E880D;
+}
+
+.hljs-section {
+  color: #871094;
+}
+
+.hljs-variable.language_,
+.hljs-symbol,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-selector-tag,
+.hljs-template-tag,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-literal,
+.hljs-name,
+.hljs-built_in,
+.hljs-type {
+  color: #0033B3;
+}
+
+.hljs-property,
+.hljs-attr {
+  color: #871094;
+}
+
+.hljs-attribute {
+  color: #174AD4;
+}
+
+.hljs-number {
+  color: #1750EB;
+}
+
+.hljs-regexp {
+  color: #264EFF;
+}
+
+.hljs-link {
+  text-decoration: underline;
+  color: #006DCC;
+}
+
+.hljs-meta .hljs-string,
+.hljs-string {
+  color: #067D17;
+}
+
+.hljs-char.escape_ {
+  color: #0037A6;
+}
+
+.hljs-doctag {
+  text-decoration: underline;
+}
+
+.hljs-template-variable {
+  color: #248F8F;
+}
+
+.hljs-addition {
+  background: #BEE6BE;
+}
+
+.hljs-deletion {
+  background: #D6D6D6;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-variable,
+.hljs-operator,
+.hljs-punctuation,
+.hljs-title.class_.inherited__,
+.hljs-title.class_,
+.hljs-params,
+.hljs-bullet,
+.hljs-formula,
+.hljs-tag {
+  /* purposely ignored */
+}
 </style>
